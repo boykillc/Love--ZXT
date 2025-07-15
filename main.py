@@ -92,7 +92,7 @@ def get_weather(region):
 def get_tianhang():
     try:
         key = config["tian_api"]
-        url = "http://api.tianapi.com/caihongpi/index?key={}".format(key)
+        url = "https://apis.tianapi.com/caihongpi/index?key={}".format(key)
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                           'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
