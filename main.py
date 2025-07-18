@@ -5,7 +5,9 @@ from datetime import datetime, date
 from zhdate import ZhDate
 import sys
 import os
-
+import http.client urllib json
+import urllib
+import json
 
 def get_color():
     # 获取随机颜色
@@ -90,7 +92,7 @@ def get_weather(region):
 
 
 def get_tianhang():
-    try:
+    """try:
         key = config["tian_api"]
         url = "https://apis.tianapi.com/caihongpi/index?key={}".format(key)
         headers = {
@@ -106,6 +108,15 @@ def get_tianhang():
             chp = ""
     except KeyError:
         chp = ""
+    """
+    conn = http.client.HTTPSConnection('apis.tianapi.com')  #接口域名
+    params = urllib.parse.urlencode({'key':'db0175fb5685e5ffdfdc8d5ead19fe4f'})
+    headers = {'Content-type':'application/x-www-form-urlencoded'}
+    conn.request('POST','/caihongpi/index',params,headers)
+    tianapi = conn.getresponse()
+    result = tianapi.read()
+    data = result.decode('utf-8')
+    chp = json.loads(data)
     return chp
 
 
