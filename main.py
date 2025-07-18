@@ -92,7 +92,7 @@ def get_weather(region):
 
 
 def get_tianhang():
-    """try:
+    try:
         key = config["tian_api"]
         url = "https://apis.tianapi.com/caihongpi/index?key={}".format(key)
         headers = {
@@ -103,59 +103,12 @@ def get_tianhang():
         }
         response = get(url, headers=headers).json()
         if response["code"] == 200:
-            chp = response["result"][0]["content"]
+            chp = response["result"]["content"][0]
         else:
             chp = ""
     except KeyError:
         chp = ""
-    """
-    try:
-        # 建议从配置文件或环境变量中获取API密钥
-        # key = config["tian_api"]
-        key = 'db0175fb5685e5ffdfdc8d5ead19fe4f'  # 临时使用硬编码，实际应外部配置
-        
-        conn = http.client.HTTPSConnection('apis.tianapi.com')
-        # 使用GET请求并将参数添加到URL
-        url = f'/caihongpi/index?key={key}'
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
-        }
-        
-        conn.request('GET', url, headers=headers)
-        response = conn.getresponse()
-        
-        if response.status != 200:
-            return "API请求失败，状态码：" + str(response.status)
-        
-        data = response.read().decode('utf-8')
-        conn.close()  # 确保关闭连接
-        
-        result = json.loads(data)
-        
-        # 打印完整响应用于调试
-        print(f"API响应: {result}")
-        
-        # 根据实际API文档调整解析逻辑
-        if result.get("code") == 200:
-            # 检查result结构是对象还是列表
-            if isinstance(result.get("result"), dict):
-                chp = result["result"].get("content", "")
-            elif isinstance(result.get("result"), list) and len(result["result"]) > 0:
-                chp = result["result"][0].get("content", "")
-            else:
-                chp = ""
-                
-            if chp:
-                return chp
-            else:
-                return "未找到内容字段"
-        else:
-            return "API返回错误：" + str(result.get("msg", "未知错误"))
-    
-    except json.JSONDecodeError:
-        return "JSON解析失败"
-    except Exception as e:
-        return f"发生异常：{str(e)}"
+    return chp
 
 
 def get_birthday(birthday, year, today):
