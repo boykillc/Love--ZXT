@@ -20,11 +20,11 @@
 "city": "长沙",
 "region": "浏阳市",
 # 生日1
-#"birthday1": {"name": "小张", "birthday": "r2007-01-16"},
+"birthday1": {"name": "小鱼", "birthday": "2006-09-25"},
 # 生日2
-#"birthday2": {"name": "小王", "birthday": "r2001-10-18"},
+"birthday2": {"name": "小王", "birthday": "r2001-10-18"},
 # 在一起的日子，格式同上
-"love_date": "2025-02-16",
+"love_date": "2025-07-17",
 # 金句中文，如果为空，默认会读取金山的每日金句
 "note_ch": "",
 # 金句英文
