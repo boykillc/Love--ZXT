@@ -115,10 +115,13 @@ def get_tianhang():
         key = 'db0175fb5685e5ffdfdc8d5ead19fe4f'  # 临时使用硬编码，实际应外部配置
         
         conn = http.client.HTTPSConnection('apis.tianapi.com')
-        params = urllib.parse.urlencode({'key': key})
-        headers = {'Content-type': 'application/x-www-form-urlencoded'}
+        # 使用GET请求并将参数添加到URL
+        url = f'/caihongpi/index?key={key}'
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+        }
         
-        conn.request('POST', '/caihongpi/index', params, headers)
+        conn.request('GET', url, headers=headers)
         response = conn.getresponse()
         
         if response.status != 200:
@@ -127,14 +130,27 @@ def get_tianhang():
         data = response.read().decode('utf-8')
         conn.close()  # 确保关闭连接
         
-        result1 = json.loads(data)
+        result = json.loads(data)
         
-        # 根据API文档提取内容字段
-        if result1.get("code") == 200:
-            chp=result1["result"][0]["content"]
-            return chp
+        # 打印完整响应用于调试
+        print(f"API响应: {result}")
+        
+        # 根据实际API文档调整解析逻辑
+        if result.get("code") == 200:
+            # 检查result结构是对象还是列表
+            if isinstance(result.get("result"), dict):
+                chp = result["result"].get("content", "")
+            elif isinstance(result.get("result"), list) and len(result["result"]) > 0:
+                chp = result["result"][0].get("content", "")
+            else:
+                chp = ""
+                
+            if chp:
+                return chp
+            else:
+                return "未找到内容字段"
         else:
-            return "API返回错误：" + str(result1.get("msg", "未知错误"))
+            return "API返回错误：" + str(result.get("msg", "未知错误"))
     
     except json.JSONDecodeError:
         return "JSON解析失败"
