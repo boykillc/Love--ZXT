@@ -127,20 +127,19 @@ def get_tianhang():
         data = response.read().decode('utf-8')
         conn.close()  # 确保关闭连接
         
-        result = json.loads(data)
+        result1 = json.loads(data)
         
         # 根据API文档提取内容字段
-        if result.get("code") == 200:
-            chp=result["newslist"][0]["content"]
+        if result1.get("code") == 200:
+            chp=result1["result"][0]["content"]
             return chp
         else:
-            return "API返回错误：" + str(result.get("msg", "未知错误"))
+            return "API返回错误：" + str(result1.get("msg", "未知错误"))
     
     except json.JSONDecodeError:
         return "JSON解析失败"
     except Exception as e:
         return f"发生异常：{str(e)}"
-    return chp
 
 
 def get_birthday(birthday, year, today):
