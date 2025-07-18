@@ -109,14 +109,37 @@ def get_tianhang():
     except KeyError:
         chp = ""
     """
-    conn = http.client.HTTPSConnection('apis.tianapi.com')  #接口域名
-    params = urllib.parse.urlencode({'key':'db0175fb5685e5ffdfdc8d5ead19fe4f'})
-    headers = {'Content-type':'application/x-www-form-urlencoded'}
-    conn.request('POST','/caihongpi/index',params,headers)
-    tianapi = conn.getresponse()
-    result = tianapi.read()
-    data = result.decode('utf-8')
-    chp = json.loads(data)
+    try:
+        # 建议从配置文件或环境变量中获取API密钥
+        # key = config["tian_api"]
+        key = 'db0175fb5685e5ffdfdc8d5ead19fe4f'  # 临时使用硬编码，实际应外部配置
+        
+        conn = http.client.HTTPSConnection('apis.tianapi.com')
+        params = urllib.parse.urlencode({'key': key})
+        headers = {'Content-type': 'application/x-www-form-urlencoded'}
+        
+        conn.request('POST', '/caihongpi/index', params, headers)
+        response = conn.getresponse()
+        
+        if response.status != 200:
+            return "API请求失败，状态码：" + str(response.status)
+        
+        data = response.read().decode('utf-8')
+        conn.close()  # 确保关闭连接
+        
+        result = json.loads(data)
+        
+        # 根据API文档提取内容字段
+        if result.get("code") == 200:
+            chp=result["newslist"][0]["content"]
+            return chp
+        else:
+            return "API返回错误：" + str(result.get("msg", "未知错误"))
+    
+    except json.JSONDecodeError:
+        return "JSON解析失败"
+    except Exception as e:
+        return f"发生异常：{str(e)}"
     return chp
 
 
