@@ -103,7 +103,7 @@ def get_tianhang():
         }
         response = get(url, headers=headers).json()
         if response["code"] == 200:
-            chp = response["result"]["content"][0]
+            chp = response["result"]["content"]
         else:
             chp = ""
     except KeyError:
