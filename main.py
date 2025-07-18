@@ -5,8 +5,8 @@ from datetime import datetime, date
 from zhdate import ZhDate
 import sys
 import os
-import http.client urllib json
-import urllib
+import http.client 
+import urllib.parse
 import json
 
 def get_color():
