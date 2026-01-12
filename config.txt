@@ -3,7 +3,7 @@
 # 公众号appId
 "app_id": "wx502072477a57d6f1",
 # 公众号appSecret
-"app_secret": "16d3c733b4af8dc32d8841ccf89d0f5c",
+"app_secret": "dAlYt4kJHSkBQi8BbBcwS7-9XvIzUcSnZwcdcdDEpXY",
 # 模板消息id
 "template_id": "ZGryUZaCPzeLZV-_wlFjcR5no3wjaq8ybTK-ZncOe4Y",
 # 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如["wx1", "wx2"]
@@ -18,15 +18,16 @@
 "province": "湖南",
 # 所在城市
 "city": "常德",
-"region": "石门县",
+"region": "澧县",
 # 生日1
-"birthday1": {"name": "小鱼", "birthday": "2006-09-25"},
+"birthday1": {"name": "小呆晨", "birthday": "2009-02-14"},
 # 生日2
-"birthday2": {"name": "小王", "birthday": "r2001-10-18"},
+"birthday2": {"name": "聪明王", "birthday": "r2001-10-18"},
 # 在一起的日子，格式同上
-"love_date": "2025-07-17",
+"love_date": "2025-11-04",
 # 金句中文，如果为空，默认会读取金山的每日金句
 "note_ch": "",
 # 金句英文
 "note_en": ""
 }
+
