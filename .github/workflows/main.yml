@@ -1,28 +1,61 @@
-name: weixin
+name: Daily Love Weather
+
 on:
   workflow_dispatch:
-  schedule: 
-    # 代表国际标准时间4点0分，北京时间需要+8小时，代表北京时间中午12点运行
-    - cron: '0 0 * * *'
+  schedule:
+    - cron: "7 8 * * *"
+      timezone: "Asia/Shanghai"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: "github-pages"
+  cancel-in-progress: false
+
 jobs:
-#将工作流程中运行的所有作业组合在一起
-  build:
-  #定义名为 build 的作业。 子键将定义作业的属性 
-    runs-on: ubuntu-latest 
+  publish-and-notify:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - uses: actions/checkout@v2
-    
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.9.12
-      - name: Set timezone
-        run: |
-          cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-      - name: install pip packages
+          python-version: "3.11"
+
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip3 install -r requirements.txt
-      - name: weixin
-        run: |
-          python3 main.py
+          pip install -r requirements.txt
+
+      - name: Build today's page
+        env:
+          APP_CONFIG_JSON: ${{ secrets.APP_CONFIG_JSON }}
+        run: python main.py --build-only
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Send WeChat notification
+        env:
+          APP_CONFIG_JSON: ${{ secrets.APP_CONFIG_JSON }}
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: python main.py --notify-only
