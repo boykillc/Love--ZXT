@@ -3,80 +3,91 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#efe2cf">
+  <meta name="theme-color" content="#ffd45b">
   <title>{{ page_title }}</title>
   <style>
     :root {
-      --bg1: #f4eadc;
-      --bg2: #ead9c3;
-      --card: rgba(255, 252, 246, .78);
-      --line: rgba(126, 93, 65, .12);
-      --text: #3f332b;
-      --muted: #806f62;
-      --accent: #c9786d;
-      --accent2: #b58a68;
-      --shadow: 0 18px 45px rgba(103, 78, 57, .15);
+      --lulu-yellow: #ffd65c;
+      --lulu-yellow-soft: #fff0a9;
+      --lulu-cream: #fff9e9;
+      --lulu-orange: #f39a32;
+      --lulu-orange-deep: #df7e20;
+      --lulu-brown: #6f4a2c;
+      --lulu-brown-soft: #9a7353;
+      --lulu-pink: #f6a7a1;
+      --glass: rgba(255, 250, 226, .80);
+      --glass-strong: rgba(255, 248, 213, .91);
+      --shadow: 0 18px 46px rgba(104, 65, 31, .17);
+      --lulu-bg: none;
     }
 
     * { box-sizing: border-box; }
-    html { background: var(--bg1); }
-    body {
-      margin: 0;
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-      background: #efe3d3;
+
+    html {
+      min-height: 100%;
+      background: #f7d36d;
     }
 
-    .capybara-bg {
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--lulu-brown);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f7d36d;
+    }
+
+    .lulu-background {
       position: fixed;
       inset: 0;
       z-index: 0;
-      overflow: hidden;
-      pointer-events: none;
-      background: linear-gradient(180deg, #dce9df 0%, #eee2d2 48%, #d8c2a6 100%);
+      background:
+        linear-gradient(180deg, rgba(255, 245, 185, .16), rgba(255, 210, 107, .22)),
+        var(--lulu-bg),
+        linear-gradient(155deg, #8ec8ff 0%, #ffe69c 54%, #f5a75b 100%);
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      transform: scale(1.015);
     }
-    .capybara-bg svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-    .capybara-bg::after {
+
+    .lulu-background::after {
       content: "";
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,248,238,.12) 45%, rgba(110,80,54,.08)),
-        radial-gradient(circle at 50% 30%, rgba(255,255,255,.12), transparent 58%);
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255, 239, 188, .10) 45%, rgba(93,55,28,.10)),
+        radial-gradient(circle at 50% 16%, rgba(255,255,255,.12), transparent 44%);
+      pointer-events: none;
     }
 
-    .hearts {
+    .floaties {
       position: fixed;
       inset: 0;
-      pointer-events: none;
-      overflow: hidden;
       z-index: 1;
-      opacity: .24;
+      overflow: hidden;
+      pointer-events: none;
+      opacity: .34;
     }
-    .heart {
+
+    .floaty {
       position: absolute;
-      bottom: -48px;
-      font-size: 18px;
-      animation: floatUp linear infinite;
-      filter: blur(.1px);
-      color: #b56f67;
+      bottom: -60px;
+      animation: float-up linear infinite;
+      filter: drop-shadow(0 3px 8px rgba(100, 58, 25, .16));
     }
-    .heart:nth-child(1){left:8%; animation-duration:12s; animation-delay:-2s;}
-    .heart:nth-child(2){left:24%; animation-duration:16s; animation-delay:-8s; font-size:13px;}
-    .heart:nth-child(3){left:49%; animation-duration:14s; animation-delay:-5s; font-size:15px;}
-    .heart:nth-child(4){left:72%; animation-duration:17s; animation-delay:-12s; font-size:12px;}
-    .heart:nth-child(5){left:90%; animation-duration:13s; animation-delay:-4s; font-size:16px;}
-    @keyframes floatUp {
+
+    .floaty:nth-child(1) { left: 8%;  animation-duration: 14s; animation-delay: -4s; font-size: 18px; }
+    .floaty:nth-child(2) { left: 26%; animation-duration: 18s; animation-delay: -10s; font-size: 14px; }
+    .floaty:nth-child(3) { left: 52%; animation-duration: 16s; animation-delay: -6s; font-size: 17px; }
+    .floaty:nth-child(4) { left: 73%; animation-duration: 20s; animation-delay: -14s; font-size: 13px; }
+    .floaty:nth-child(5) { left: 91%; animation-duration: 15s; animation-delay: -8s; font-size: 16px; }
+
+    @keyframes float-up {
       0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-      12% { opacity: .65; }
-      100% { transform: translateY(-115vh) rotate(22deg); opacity: 0; }
+      12% { opacity: .85; }
+      100% { transform: translateY(-115vh) rotate(24deg); opacity: 0; }
     }
 
     .page {
@@ -84,372 +95,421 @@
       z-index: 2;
       width: min(100%, 720px);
       margin: 0 auto;
-      padding: max(28px, env(safe-area-inset-top)) 18px
-               max(38px, env(safe-area-inset-bottom));
+      padding: max(24px, env(safe-area-inset-top)) 16px
+               max(40px, env(safe-area-inset-bottom));
     }
 
     .hero {
       text-align: center;
-      padding: 22px 8px 14px;
+      padding: 14px 5px 16px;
     }
-    .eyebrow {
+
+    .hero-date {
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      padding: 7px 12px;
+      padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(255, 252, 246, .76);
-      border: 1px solid rgba(255,255,255,.86);
-      box-shadow: 0 8px 24px rgba(92, 69, 49, .10);
-      color: var(--muted);
+      color: #765035;
+      font-weight: 700;
       font-size: 13px;
+      background: rgba(255, 249, 220, .84);
+      border: 2px solid rgba(255, 213, 85, .84);
+      box-shadow: 0 8px 22px rgba(103, 62, 25, .12);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .hero h1 {
+      margin: 14px auto 8px;
+      font-size: clamp(28px, 8vw, 42px);
+      line-height: 1.16;
+      color: #fff8d8;
+      text-shadow:
+        0 3px 0 rgba(119, 71, 31, .58),
+        0 7px 22px rgba(89, 50, 18, .32);
+      letter-spacing: .02em;
+    }
+
+    .hero-subtitle {
+      display: inline-block;
+      margin: 0;
+      padding: 7px 13px;
+      border-radius: 999px;
+      color: #704a2e;
+      font-size: 14px;
+      font-weight: 650;
+      background: rgba(255, 244, 196, .78);
+      border: 1px solid rgba(255, 255, 255, .66);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
-    h1 {
-      margin: 15px 0 5px;
-      font-size: clamp(26px, 7vw, 38px);
-      line-height: 1.25;
-      letter-spacing: -.02em;
-      color: #6e5140;
-      text-shadow: 0 2px 14px rgba(255,255,255,.72);
-    }
-    .subtitle {
-      display: inline-block;
-      margin: 8px 0 0;
-      padding: 6px 11px;
-      border-radius: 999px;
-      color: #715f53;
-      font-size: 14px;
-      background: rgba(255,252,246,.62);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+
+    .lulu-card {
+      position: relative;
+      margin-top: 16px;
+      border: 2px solid rgba(255, 199, 61, .82);
+      background: var(--glass);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px) saturate(1.08);
+      -webkit-backdrop-filter: blur(18px) saturate(1.08);
     }
 
     .weather-card {
-      margin-top: 14px;
-      padding: 24px 20px 20px;
-      border-radius: 28px;
-      background: linear-gradient(145deg, rgba(255,253,248,.88), rgba(249,240,228,.68));
-      border: 1px solid rgba(255,255,255,.86);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px) saturate(1.05);
-      -webkit-backdrop-filter: blur(18px) saturate(1.05);
+      margin-top: 13px;
+      padding: 27px 19px 20px;
+      border-radius: 42px 42px 34px 34px;
+      overflow: visible;
+      background:
+        radial-gradient(circle at 82% 16%, rgba(255, 213, 76, .28), transparent 27%),
+        var(--glass-strong);
     }
+
+    .weather-card::before,
+    .weather-card::after {
+      content: "";
+      position: absolute;
+      top: -10px;
+      width: 38px;
+      height: 32px;
+      border-radius: 70% 70% 48% 48%;
+      background: var(--lulu-yellow);
+      border: 2px solid rgba(223, 126, 32, .46);
+      z-index: -1;
+    }
+
+    .weather-card::before { left: 35px; transform: rotate(-18deg); }
+    .weather-card::after  { right: 35px; transform: rotate(18deg); }
+
+    .orange-hat {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 42px;
+      height: 25px;
+      border-radius: 50% 50% 44% 44%;
+      background: linear-gradient(180deg, #ffb143, #f18722);
+      box-shadow: inset 0 -3px 0 rgba(194, 95, 15, .13), 0 4px 9px rgba(104, 60, 22, .14);
+    }
+
+    .orange-hat::after {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: 19px;
+      width: 5px;
+      height: 8px;
+      border-radius: 4px;
+      background: #6fa159;
+      transform: rotate(8deg);
+    }
+
     .weather-main {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 16px;
+      gap: 14px;
       align-items: center;
     }
+
     .location {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 8px;
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 232, 132, .60);
+      color: #7c5637;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
     }
+
     .condition {
       display: flex;
       align-items: flex-end;
       gap: 10px;
     }
+
     .temp {
-      font-size: clamp(48px, 14vw, 72px);
-      font-weight: 750;
-      line-height: .95;
-      letter-spacing: -.05em;
-    }
-    .weather-word {
-      padding-bottom: 6px;
-      color: var(--muted);
-      font-weight: 600;
-    }
-    .weather-icon {
-      font-size: clamp(54px, 15vw, 80px);
-      filter: drop-shadow(0 12px 20px rgba(109, 82, 57, .14));
+      font-size: clamp(50px, 15vw, 76px);
+      font-weight: 850;
+      line-height: .94;
+      letter-spacing: -.055em;
+      color: #66432c;
     }
 
-    .range {
-      display: flex;
-      gap: 9px;
+    .weather-word {
+      padding-bottom: 7px;
+      color: #8b6548;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .weather-icon {
+      font-size: clamp(55px, 16vw, 82px);
+      filter: drop-shadow(0 10px 15px rgba(108, 70, 32, .15));
+    }
+
+    .snout-bar {
       margin-top: 18px;
+      padding: 12px 12px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, #ffad41, #f28c29);
+      box-shadow: inset 0 -4px 0 rgba(185, 85, 15, .10);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
-    .pill {
-      flex: 1;
+
+    .temp-pill {
+      padding: 10px 8px;
       text-align: center;
-      padding: 11px 8px;
-      border-radius: 16px;
-      background: rgba(248, 236, 221, .76);
-      color: var(--muted);
-      font-size: 13px;
+      border-radius: 20px;
+      color: #5f3d26;
+      font-size: 12px;
+      background: rgba(255, 247, 200, .82);
+      border: 1px solid rgba(255,255,255,.45);
     }
-    .pill b {
+
+    .temp-pill strong {
       display: block;
       margin-top: 3px;
-      color: var(--text);
-      font-size: 16px;
+      font-size: 17px;
+      color: #5f3d26;
     }
 
-    .grid {
+    .stats-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+      gap: 11px;
       margin-top: 14px;
     }
-    .stat {
-      padding: 16px;
-      border-radius: 21px;
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,.84);
-      box-shadow: 0 12px 32px rgba(92, 69, 49, .09);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+
+    .stat-card {
+      position: relative;
+      padding: 16px 14px 15px;
+      min-height: 91px;
+      border-radius: 28px;
+      border: 2px solid rgba(255, 203, 67, .62);
+      background: rgba(255, 249, 220, .82);
+      box-shadow: 0 11px 28px rgba(94, 60, 25, .11);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      overflow: hidden;
     }
+
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      right: -18px;
+      bottom: -24px;
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      background: rgba(243, 154, 50, .13);
+    }
+
     .stat-label {
-      color: var(--muted);
+      position: relative;
+      z-index: 1;
+      color: #987254;
       font-size: 12px;
+      font-weight: 700;
       margin-bottom: 7px;
     }
+
     .stat-value {
+      position: relative;
+      z-index: 1;
+      color: #65432b;
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 850;
       word-break: break-word;
     }
 
     .section {
-      margin-top: 18px;
-      padding: 20px;
-      border-radius: 24px;
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,.84);
-      box-shadow: 0 14px 36px rgba(92, 69, 49, .10);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      position: relative;
+      margin-top: 16px;
+      padding: 22px 18px 19px;
+      border-radius: 34px;
+      border: 2px solid rgba(255, 201, 59, .72);
+      background: rgba(255, 249, 221, .84);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      overflow: hidden;
     }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      top: -31px;
+      right: -28px;
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: rgba(255, 197, 49, .20);
+    }
+
     .section-title {
-      display: flex;
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       margin: 0 0 13px;
-      font-size: 16px;
+      padding: 7px 13px 7px 11px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ffd762, #ffc83d);
+      color: #704722;
+      font-size: 15px;
+      font-weight: 850;
+      box-shadow: inset 0 -2px 0 rgba(213, 120, 25, .10);
     }
+
+    .section-title::after {
+      content: "";
+      width: 15px;
+      height: 10px;
+      margin-left: 1px;
+      border-radius: 60% 60% 45% 45%;
+      background: var(--lulu-orange);
+      box-shadow: 0 -4px 0 -2px #6d9d57;
+    }
+
     .section p {
+      position: relative;
+      z-index: 1;
       margin: 0;
-      line-height: 1.9;
+      line-height: 1.92;
+      color: #64462f;
       font-size: 15px;
       white-space: pre-wrap;
     }
 
-    .birthday-list {
-      display: grid;
-      gap: 10px;
+    .love-card {
+      background:
+        radial-gradient(circle at 90% 12%, rgba(255, 169, 113, .27), transparent 30%),
+        rgba(255, 247, 214, .89);
     }
-    .birthday {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 13px 14px;
-      border-radius: 17px;
-      background: rgba(244, 231, 214, .72);
+
+    .love-card::after {
+      content: "♡";
+      position: absolute;
+      right: 14px;
+      bottom: -17px;
+      color: rgba(241, 143, 70, .11);
+      font-size: 94px;
+      font-weight: 700;
+      transform: rotate(-8deg);
     }
-    .birthday-name {
-      font-size: 14px;
-      color: var(--muted);
-    }
-    .birthday-days {
-      font-size: 16px;
-      font-weight: 750;
-      color: var(--accent);
-      text-align: right;
+
+    .love-text {
+      font-size: 16px !important;
+      font-weight: 700;
     }
 
     .love-count {
+      position: relative;
+      z-index: 1;
       text-align: center;
-      padding: 6px 0 3px;
+      padding: 6px 0 4px;
     }
+
     .love-number {
-      font-size: clamp(42px, 12vw, 64px);
-      font-weight: 800;
-      color: var(--accent);
+      font-size: clamp(44px, 13vw, 68px);
       line-height: 1;
-      letter-spacing: -.04em;
+      font-weight: 900;
+      color: var(--lulu-orange-deep);
+      text-shadow: 0 2px 0 rgba(255,255,255,.65);
     }
+
     .love-unit {
-      color: var(--muted);
+      margin-top: 8px;
+      color: #896548;
       font-size: 13px;
-      margin-top: 7px;
+      font-weight: 700;
+    }
+
+    .birthday-list {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 9px;
+    }
+
+    .birthday-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255, 231, 128, .70), rgba(255, 241, 179, .78));
+      border: 1px solid rgba(255, 185, 46, .34);
+    }
+
+    .birthday-name {
+      color: #806044;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .birthday-days {
+      color: var(--lulu-orange-deep);
+      font-size: 16px;
+      font-weight: 900;
+      text-align: right;
     }
 
     .quote-cn {
       font-size: 16px !important;
-      font-weight: 650;
+      font-weight: 750;
     }
+
     .quote-en {
       margin-top: 8px !important;
-      color: var(--muted);
+      color: #917258 !important;
       font-size: 13px !important;
       line-height: 1.65 !important;
     }
 
-    .love-letter {
-      position: relative;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 100% 0, rgba(238, 184, 153, .36), transparent 42%),
-        rgba(255,252,246,.82);
-    }
-    .love-letter::after {
-      content: "♡";
-      position: absolute;
-      right: 14px;
-      bottom: -10px;
-      font-size: 82px;
-      color: rgba(177, 111, 102, .08);
-      transform: rotate(-8deg);
-    }
-    .love-text {
-      position: relative;
-      z-index: 1;
-      font-size: 16px !important;
-      font-weight: 620;
-    }
-
     footer {
       text-align: center;
-      color: #6f5f54;
+      color: #fff7d0;
+      text-shadow: 0 2px 9px rgba(80, 45, 18, .55);
       font-size: 12px;
-      padding: 24px 0 6px;
+      font-weight: 700;
+      padding: 24px 0 8px;
       line-height: 1.8;
-      text-shadow: 0 1px 10px rgba(255,255,255,.9);
     }
 
     @media (min-width: 640px) {
       .page { padding-left: 24px; padding-right: 24px; }
-      .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
   </style>
 </head>
 <body>
-  <div class="capybara-bg" aria-hidden="true">
-    <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#d9e8df"/>
-          <stop offset="0.52" stop-color="#efe5d6"/>
-          <stop offset="1" stop-color="#d7c0a2"/>
-        </linearGradient>
-        <linearGradient id="water" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#b9d8cf" stop-opacity=".84"/>
-          <stop offset="1" stop-color="#90b8ae" stop-opacity=".88"/>
-        </linearGradient>
-        <linearGradient id="fur" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#a97955"/>
-          <stop offset="1" stop-color="#805b42"/>
-        </linearGradient>
-        <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="18"/>
-        </filter>
-      </defs>
+  <div class="lulu-background" aria-hidden="true"></div>
 
-      <rect width="1080" height="1920" fill="url(#sky)"/>
-
-      <g opacity=".34" fill="#fffdf8">
-        <ellipse cx="170" cy="260" rx="150" ry="62"/>
-        <ellipse cx="300" cy="260" rx="122" ry="48"/>
-        <ellipse cx="860" cy="390" rx="175" ry="68"/>
-        <ellipse cx="730" cy="395" rx="110" ry="48"/>
-      </g>
-
-      <circle cx="865" cy="165" r="88" fill="#f5d79a" opacity=".68"/>
-      <circle cx="865" cy="165" r="123" fill="#f6dda8" opacity=".16" filter="url(#soft)"/>
-
-      <path d="M0 1015 C190 905 360 925 515 1005 C705 1103 875 1037 1080 900 L1080 1920 L0 1920 Z" fill="#b8c7a4" opacity=".62"/>
-      <path d="M0 1170 C190 1072 370 1102 545 1190 C765 1300 880 1202 1080 1120 L1080 1920 L0 1920 Z" fill="#9eb28e" opacity=".72"/>
-      <path d="M0 1388 C180 1310 320 1335 482 1390 C680 1458 850 1398 1080 1298 L1080 1920 L0 1920 Z" fill="url(#water)"/>
-
-      <g opacity=".58" fill="#f5efe5">
-        <circle cx="130" cy="1120" r="9"/><circle cx="166" cy="1080" r="7"/><circle cx="930" cy="1030" r="9"/>
-        <circle cx="972" cy="1070" r="6"/><circle cx="850" cy="1120" r="7"/><circle cx="235" cy="1180" r="6"/>
-      </g>
-
-      <g transform="translate(510 1365)">
-        <ellipse cx="0" cy="232" rx="330" ry="250" fill="#6d513e" opacity=".16" filter="url(#soft)"/>
-        <ellipse cx="0" cy="120" rx="315" ry="235" fill="url(#fur)"/>
-        <ellipse cx="190" cy="-28" rx="202" ry="186" fill="#996c4c"/>
-
-        <ellipse cx="72" cy="-165" rx="58" ry="50" fill="#74523e"/>
-        <ellipse cx="260" cy="-170" rx="54" ry="48" fill="#74523e"/>
-        <ellipse cx="78" cy="-165" rx="33" ry="28" fill="#b48161"/>
-        <ellipse cx="254" cy="-170" rx="31" ry="27" fill="#b48161"/>
-
-        <ellipse cx="206" cy="22" rx="126" ry="82" fill="#b98966"/>
-        <ellipse cx="162" cy="-55" rx="11" ry="15" fill="#332822"/>
-        <ellipse cx="285" cy="-58" rx="11" ry="15" fill="#332822"/>
-        <ellipse cx="221" cy="-3" rx="28" ry="20" fill="#3d3029"/>
-        <path d="M221 15 C210 35 193 38 177 29" fill="none" stroke="#5a4032" stroke-width="8" stroke-linecap="round"/>
-        <path d="M221 15 C234 34 251 36 266 27" fill="none" stroke="#5a4032" stroke-width="8" stroke-linecap="round"/>
-        <circle cx="135" cy="1" r="19" fill="#d79079" opacity=".35"/>
-        <circle cx="315" cy="-2" r="19" fill="#d79079" opacity=".35"/>
-
-        <g transform="translate(190 -245) rotate(-8)">
-          <circle cx="0" cy="0" r="53" fill="#efa443"/>
-          <path d="M-2 -46 C10 -75 42 -77 58 -54 C32 -52 16 -42 -2 -46 Z" fill="#6f9b61"/>
-          <circle cx="-16" cy="-8" r="4" fill="#d88731" opacity=".7"/>
-          <circle cx="17" cy="7" r="4" fill="#d88731" opacity=".7"/>
-        </g>
-
-        <ellipse cx="-150" cy="237" rx="105" ry="43" fill="#8b6248"/>
-        <ellipse cx="132" cy="275" rx="105" ry="44" fill="#8b6248"/>
-      </g>
-
-      <g opacity=".48">
-        <ellipse cx="190" cy="1660" rx="114" ry="21" fill="#d4ebe4"/>
-        <ellipse cx="842" cy="1545" rx="135" ry="24" fill="#d4ebe4"/>
-        <ellipse cx="760" cy="1760" rx="92" ry="16" fill="#d4ebe4"/>
-      </g>
-
-      <g transform="translate(105 1430)" opacity=".72">
-        <path d="M0 150 C22 70 38 35 55 0" fill="none" stroke="#708d67" stroke-width="10" stroke-linecap="round"/>
-        <ellipse cx="44" cy="50" rx="32" ry="15" fill="#8dab79" transform="rotate(-28 44 50)"/>
-        <ellipse cx="20" cy="95" rx="30" ry="14" fill="#8dab79" transform="rotate(25 20 95)"/>
-        <circle cx="57" cy="-8" r="20" fill="#f2c8b8"/>
-        <circle cx="39" cy="-2" r="17" fill="#f7d8ca"/>
-        <circle cx="73" cy="8" r="17" fill="#f7d8ca"/>
-        <circle cx="57" cy="6" r="9" fill="#d69a86"/>
-      </g>
-
-      <g transform="translate(925 1290)" opacity=".72">
-        <path d="M0 180 C-14 100 -30 50 -46 0" fill="none" stroke="#708d67" stroke-width="10" stroke-linecap="round"/>
-        <ellipse cx="-29" cy="62" rx="32" ry="15" fill="#8dab79" transform="rotate(25 -29 62)"/>
-        <ellipse cx="-4" cy="120" rx="30" ry="14" fill="#8dab79" transform="rotate(-25 -4 120)"/>
-        <circle cx="-48" cy="-8" r="20" fill="#f0d2a6"/>
-        <circle cx="-65" cy="-2" r="17" fill="#f7e1bd"/>
-        <circle cx="-31" cy="8" r="17" fill="#f7e1bd"/>
-        <circle cx="-48" cy="6" r="9" fill="#d5ae70"/>
-      </g>
-
-      <g fill="#6a4e3c" opacity=".18" font-family="sans-serif" text-anchor="middle">
-        <text x="540" y="1870" font-size="52" font-weight="700">噜噜 · 今天也要慢慢开心</text>
-      </g>
-    </svg>
-  </div>
-
-  <div class="hearts" aria-hidden="true">
-    <div class="heart">♡</div>
-    <div class="heart">♥</div>
-    <div class="heart">♡</div>
-    <div class="heart">♥</div>
-    <div class="heart">♡</div>
+  <div class="floaties" aria-hidden="true">
+    <div class="floaty">🍊</div>
+    <div class="floaty">💛</div>
+    <div class="floaty">🍊</div>
+    <div class="floaty">🧡</div>
+    <div class="floaty">🍊</div>
   </div>
 
   <main class="page">
     <header class="hero">
-      <div class="eyebrow">💗 {{ date_cn }} · {{ week }}</div>
+      <div class="hero-date">🍊 {{ date_cn }} · {{ week }}</div>
       <h1>{{ page_title }}</h1>
-      <p class="subtitle">{{ page_subtitle }}</p>
+      <p class="hero-subtitle">{{ page_subtitle }}</p>
     </header>
 
-    <section class="weather-card">
+    <section class="lulu-card weather-card">
+      <span class="orange-hat" aria-hidden="true"></span>
       <div class="weather-main">
         <div>
           <div class="location">📍 {{ region }}</div>
@@ -461,26 +521,26 @@
         <div class="weather-icon" aria-label="{{ weather }}">{{ weather_icon }}</div>
       </div>
 
-      <div class="range">
-        <div class="pill">最低温度<b>{{ min_temp }}</b></div>
-        <div class="pill">最高温度<b>{{ max_temp }}</b></div>
+      <div class="snout-bar">
+        <div class="temp-pill">最低温度<strong>{{ min_temp }}</strong></div>
+        <div class="temp-pill">最高温度<strong>{{ max_temp }}</strong></div>
       </div>
     </section>
 
-    <section class="grid" aria-label="天气详情">
-      <div class="stat">
+    <section class="stats-grid" aria-label="天气详情">
+      <div class="stat-card">
         <div class="stat-label">💨 当前风向</div>
         <div class="stat-value">{{ wind_dir }}</div>
       </div>
-      <div class="stat">
+      <div class="stat-card">
         <div class="stat-label">🌿 空气质量</div>
         <div class="stat-value">{{ category }}</div>
       </div>
-      <div class="stat">
+      <div class="stat-card">
         <div class="stat-label">🍃 PM2.5</div>
         <div class="stat-value">{{ pm2p5 }}</div>
       </div>
-      <div class="stat">
+      <div class="stat-card">
         <div class="stat-label">🌅 日出 / 日落</div>
         <div class="stat-value">{{ sunrise }} / {{ sunset }}</div>
       </div>
@@ -501,7 +561,7 @@
       <h2 class="section-title">🎂 生日倒计时</h2>
       <div class="birthday-list">
         {% for item in birthdays %}
-        <div class="birthday">
+        <div class="birthday-row">
           <div class="birthday-name">距离 {{ item.name }} 的生日</div>
           <div class="birthday-days">{{ item.display }}</div>
         </div>
@@ -515,7 +575,7 @@
       <p>{{ proposal }}</p>
     </section>
 
-    <section class="section love-letter">
+    <section class="section love-card">
       <h2 class="section-title">💌 今天想对你说</h2>
       <p class="love-text">{{ chp }}</p>
     </section>
@@ -529,9 +589,33 @@
     </section>
 
     <footer>
-      天气每天都会变，喜欢你这件事不会。<br>
-      Made with ♡ for you
+      噜噜陪你看天气 · 今天也要慢慢开心 🍊<br>
+      Made with 🧡 for you
     </footer>
   </main>
+
+  <script>
+    (function () {
+      const backgrounds = [
+        "https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg",
+        "https://file.moyubuluo.com/d/file/2026-06-09/772c5b60b566802a6bd19e4b1f4ccbe1.jpg",
+        "https://file.moyubuluo.com/d/file/2026-08-03/c4752d917f116ad51a01709cade9ba16.jpg"
+      ];
+
+      function tryBackground(index) {
+        if (index >= backgrounds.length) return;
+        const img = new Image();
+        img.onload = function () {
+          document.documentElement.style.setProperty("--lulu-bg", `url("${backgrounds[index]}")`);
+        };
+        img.onerror = function () {
+          tryBackground(index + 1);
+        };
+        img.src = backgrounds[index];
+      }
+
+      tryBackground(0);
+    })();
+  </script>
 </body>
 </html>
