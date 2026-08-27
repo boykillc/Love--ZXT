@@ -41,12 +41,35 @@ h1{margin:14px 0 7px;font-size:clamp(28px,8vw,42px);color:#fff7d3;text-shadow:0 
 
 {% if love_days %}<section class="card"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20114/100/w450h450/20251004/ca2d-gif52a1cdfbd5eef975e29dc63590074c0c.gif" data-fallback="assets/lulu-5.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><h2 class="card-title">❤️ 我们的小日子</h2><div class="love-number">{{ love_days }}</div><div class="love-unit">在一起的第 {{ love_days }} 天</div></section>{% endif %}
 
-{% if birthdays %}<section class="card"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20114/480/w640h640/20251004/6517-gife204c1f6c83ae1953e79ef23f71e5ae5.gif" data-fallback="assets/lulu-6.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><h2 class="card-title">🎂 生日倒计时</h2><div class="birthday-list">{% for item in birthdays %}<div class="birthday"><div class="birthday-name">距离 {{ item.name }} 的生日</div><div class="birthday-days">{{ item.display }}</div></div>{% endfor %}</div></section>{% endif %}
+{% if birthdays %}<section class="card"><img class="lulu-mini" src="https://n.sinaimg.cn/sinakd20117/792/w396h396/20250424/cdeb-gif0cda8e83307cce289b71ee12bfebebfc.gif" data-fallback="assets/lulu-6.gif" onerror="useStableLocalGif(this)" alt="噜噜"><h2 class="card-title">🎂 生日倒计时</h2><div class="birthday-list">{% for item in birthdays %}<div class="birthday"><div class="birthday-name">距离 {{ item.name }} 的生日</div><div class="birthday-days">{{ item.display }}</div></div>{% endfor %}</div></section>{% endif %}
 
-<section class="card"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20114/480/w640h640/20251004/99a9-giff8d4219580115ee99904581ba89a649b.gif" data-fallback="assets/lulu-7.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><h2 class="card-title">☁️ 今日建议</h2><p>{{ proposal }}</p></section>
-<section class="card love-card"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20114/100/w450h450/20251004/407d-giff8d08f52c6c7243c224b7da0deefdd46.gif" data-fallback="assets/lulu-8.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><h2 class="card-title">💌 今天想对你说</h2><p>{{ chp }}</p></section>
+<section class="card"><img class="lulu-mini" src="https://n.sinaimg.cn/sinakd20117/792/w396h396/20250424/c490-gif67612b0f702fb030370557401c792ddb.gif" data-fallback="assets/lulu-7.gif" onerror="useStableLocalGif(this)" alt="噜噜"><h2 class="card-title">☁️ 今日建议</h2><p>{{ proposal }}</p></section>
+<section class="card love-card"><img class="lulu-mini" src="https://n.sinaimg.cn/sinakd20117/789/w394h395/20250424/ddae-gif4bbcdd8098eb48d61ee4acc43e875308.gif" data-fallback="assets/lulu-8.gif" onerror="useStableLocalGif(this)" alt="噜噜"><h2 class="card-title">💌 今天想对你说</h2><p>{{ chp }}</p></section>
 <section class="card"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20108/0/w400h400/20251020/303e-gif5b8d73c297b4edfb7a54a83a2901c9e8.gif" data-fallback="assets/lulu-9.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><h2 class="card-title">✨ 每日一句</h2><p class="quote-cn">{{ note_ch }}</p>{% if note_en %}<p class="quote-en">{{ note_en }}</p>{% endif %}</section>
 <footer>噜噜陪你看天气 · 今天也要慢慢开心 🍊<br>Made with 🧡 for you</footer>
 </main>
+<script>
+async function useStableLocalGif(img){
+  if(img.dataset.fallbackApplied){return;}
+  img.dataset.fallbackApplied="1";
+  const fallback=img.dataset.fallback;
+  try{
+    const response=await fetch(fallback,{cache:"force-cache"});
+    if(!response.ok){throw new Error("fallback fetch failed");}
+    const bytes=new Uint8Array(await response.arrayBuffer());
+    for(let i=0;i+4<bytes.length;i++){
+      if(bytes[i]===0x21&&bytes[i+1]===0xF9&&bytes[i+2]===0x04){
+        bytes[i+3]=(bytes[i+3]&0xE3)|0x04;
+      }
+    }
+    const url=URL.createObjectURL(new Blob([bytes],{type:"image/gif"}));
+    img.onerror=null;
+    img.src=url;
+  }catch(error){
+    img.onerror=null;
+    img.src=fallback;
+  }
+}
+</script>
 </body>
 </html>
