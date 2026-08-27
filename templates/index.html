@@ -8,7 +8,7 @@
 <style>
 :root{--yellow:#ffd85c;--cream:#fffaf0;--orange:#f5a038;--orange2:#df7f25;--brown:#67442d;--muted:#8c6a50;--glass:rgba(255,250,229,.86);--shadow:0 18px 44px rgba(91,55,24,.18)}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#f4ce61;color:var(--brown);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}body{overflow-x:hidden}
-.bg{position:fixed;inset:0;z-index:0;background:linear-gradient(rgba(255,231,119,.18),rgba(115,68,30,.16)),url("assets/lulu-bg.jpg") center 30%/cover no-repeat,#f4ce61;transform:scale(1.01)}
+.bg{position:fixed;inset:0;z-index:0;background:linear-gradient(rgba(255,231,119,.18),rgba(115,68,30,.16)),url("https://file.moyubuluo.com/d/file/2026-08-03/c4752d917f116ad51a01709cade9ba16.jpg") center 30%/cover no-repeat,url("assets/lulu-bg.jpg") center 30%/cover no-repeat,#f4ce61;transform:scale(1.01)}
 .bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,240,180,.09),rgba(86,48,22,.15));pointer-events:none}
 .page{position:relative;z-index:2;width:min(100%,720px);margin:auto;padding:max(24px,env(safe-area-inset-top)) 16px max(40px,env(safe-area-inset-bottom))}
 .hero{text-align:center;padding:14px 4px 18px}.date-pill{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,249,220,.9);border:2px solid rgba(255,207,68,.85);font-size:13px;font-weight:750;backdrop-filter:blur(14px)}
@@ -33,19 +33,19 @@ h1{margin:14px 0 7px;font-size:clamp(28px,8vw,42px);color:#fff7d3;text-shadow:0 
 </section>
 
 <section class="stats">
-<div class="stat"><img class="lulu-mini" src="assets/lulu-1.gif" alt="噜噜"><div class="stat-label">💨 当前风向</div><div class="stat-value">{{ wind_dir }}</div></div>
-<div class="stat"><img class="lulu-mini" src="assets/lulu-2.gif" alt="噜噜"><div class="stat-label">🌿 空气质量</div><div class="stat-value">{{ category }}</div></div>
-<div class="stat"><img class="lulu-mini" src="assets/lulu-3.gif" alt="噜噜"><div class="stat-label">🍃 PM2.5</div><div class="stat-value">{{ pm2p5 }}</div></div>
-<div class="stat"><img class="lulu-mini" src="assets/lulu-4.gif" alt="噜噜"><div class="stat-label">🌅 日出 / 日落</div><div class="stat-value">{{ sunrise }} / {{ sunset }}</div></div>
+<div class="stat"><img class="lulu-mini" src="https://n.sinaimg.cn/sinakd20120/100/w450h450/20250323/a16a-gif966aab91a2221556decd1e2fc4932b6c.gif" data-fallback="assets/lulu-1.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><div class="stat-label">💨 当前风向</div><div class="stat-value">{{ wind_dir }}</div></div>
+<div class="stat"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20114/116/w458h458/20251004/87e5-gif545e17880baacd2d2e5bc4fb46beafd9.gif" data-fallback="assets/lulu-2.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><div class="stat-label">🌿 空气质量</div><div class="stat-value">{{ category }}</div></div>
+<div class="stat"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20114/0/w400h400/20251004/b4e5-gife38550bb43adbfdae7ac788e74ed1038.gif" data-fallback="assets/lulu-3.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><div class="stat-label">🍃 PM2.5</div><div class="stat-value">{{ pm2p5 }}</div></div>
+<div class="stat"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20114/0/w400h400/20251004/86d2-gif76f89a900dc2812de7d5b459b2bac8e1.gif" data-fallback="assets/lulu-4.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><div class="stat-label">🌅 日出 / 日落</div><div class="stat-value">{{ sunrise }} / {{ sunset }}</div></div>
 </section>
 
-{% if love_days %}<section class="card"><img class="lulu-mini" src="assets/lulu-5.gif" alt="噜噜"><h2 class="card-title">❤️ 我们的小日子</h2><div class="love-number">{{ love_days }}</div><div class="love-unit">在一起的第 {{ love_days }} 天</div></section>{% endif %}
+{% if love_days %}<section class="card"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20114/100/w450h450/20251004/ca2d-gif52a1cdfbd5eef975e29dc63590074c0c.gif" data-fallback="assets/lulu-5.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><h2 class="card-title">❤️ 我们的小日子</h2><div class="love-number">{{ love_days }}</div><div class="love-unit">在一起的第 {{ love_days }} 天</div></section>{% endif %}
 
-{% if birthdays %}<section class="card"><img class="lulu-mini" src="assets/lulu-6.gif" alt="噜噜"><h2 class="card-title">🎂 生日倒计时</h2><div class="birthday-list">{% for item in birthdays %}<div class="birthday"><div class="birthday-name">距离 {{ item.name }} 的生日</div><div class="birthday-days">{{ item.display }}</div></div>{% endfor %}</div></section>{% endif %}
+{% if birthdays %}<section class="card"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20114/480/w640h640/20251004/6517-gife204c1f6c83ae1953e79ef23f71e5ae5.gif" data-fallback="assets/lulu-6.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><h2 class="card-title">🎂 生日倒计时</h2><div class="birthday-list">{% for item in birthdays %}<div class="birthday"><div class="birthday-name">距离 {{ item.name }} 的生日</div><div class="birthday-days">{{ item.display }}</div></div>{% endfor %}</div></section>{% endif %}
 
-<section class="card"><img class="lulu-mini" src="assets/lulu-7.gif" alt="噜噜"><h2 class="card-title">☁️ 今日建议</h2><p>{{ proposal }}</p></section>
-<section class="card love-card"><img class="lulu-mini" src="assets/lulu-8.gif" alt="噜噜"><h2 class="card-title">💌 今天想对你说</h2><p>{{ chp }}</p></section>
-<section class="card"><img class="lulu-mini" src="assets/lulu-9.gif" alt="噜噜"><h2 class="card-title">✨ 每日一句</h2><p class="quote-cn">{{ note_ch }}</p>{% if note_en %}<p class="quote-en">{{ note_en }}</p>{% endif %}</section>
+<section class="card"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20114/480/w640h640/20251004/99a9-giff8d4219580115ee99904581ba89a649b.gif" data-fallback="assets/lulu-7.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><h2 class="card-title">☁️ 今日建议</h2><p>{{ proposal }}</p></section>
+<section class="card love-card"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20114/100/w450h450/20251004/407d-giff8d08f52c6c7243c224b7da0deefdd46.gif" data-fallback="assets/lulu-8.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><h2 class="card-title">💌 今天想对你说</h2><p>{{ chp }}</p></section>
+<section class="card"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd20108/0/w400h400/20251020/303e-gif5b8d73c297b4edfb7a54a83a2901c9e8.gif" data-fallback="assets/lulu-9.gif" onerror="this.onerror=null;this.src=this.dataset.fallback" alt="噜噜"><h2 class="card-title">✨ 每日一句</h2><p class="quote-cn">{{ note_ch }}</p>{% if note_en %}<p class="quote-en">{{ note_en }}</p>{% endif %}</section>
 <footer>噜噜陪你看天气 · 今天也要慢慢开心 🍊<br>Made with 🧡 for you</footer>
 </main>
 </body>
