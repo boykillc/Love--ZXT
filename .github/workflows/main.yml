@@ -9,13 +9,13 @@ on:
     branches: [main]
     paths:
       - "templates/**"
+      - "assets/**"
       - "main.py"
       - "requirements.txt"
-      - "scripts/**"
       - ".github/workflows/main.yml"
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
   actions: read
@@ -45,27 +45,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Cache Lulu assets in repository
-        run: python scripts/cache_lulu_assets.py
-
-      - name: Commit cached Lulu assets
-        run: |
-          if [ -n "$(git status --porcelain -- assets/)" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add assets/
-            git commit -m "assets: cache Lulu images [skip ci]"
-            git push
-          else
-            echo "Lulu assets already cached."
-          fi
-
       - name: Build today's page
         env:
           APP_CONFIG_JSON: ${{ secrets.APP_CONFIG_JSON }}
         run: python main.py --build-only
 
-      - name: Copy Lulu assets into site
+      - name: Copy Lulu fallbacks into site
         run: |
           mkdir -p _site/assets
           cp -f assets/lulu-bg.jpg _site/assets/lulu-bg.jpg
