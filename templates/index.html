@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fff4f7">
+  <title>{{ page_title }}</title>
+  <style>
+    :root {
+      --bg1: #fff6f8;
+      --bg2: #fff0f5;
+      --card: rgba(255,255,255,.78);
+      --line: rgba(196, 86, 126, .12);
+      --text: #3a2a31;
+      --muted: #8d6f7a;
+      --accent: #d95d8a;
+      --accent2: #b56f9c;
+      --shadow: 0 18px 45px rgba(170, 86, 120, .12);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--bg1); }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255, 202, 220, .55), transparent 34%),
+        radial-gradient(circle at 90% 18%, rgba(225, 202, 255, .42), transparent 32%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+      opacity: .36;
+    }
+    .heart {
+      position: absolute;
+      bottom: -48px;
+      font-size: 18px;
+      animation: floatUp linear infinite;
+      filter: blur(.1px);
+    }
+    .heart:nth-child(1){left:8%; animation-duration:12s; animation-delay:-2s;}
+    .heart:nth-child(2){left:24%; animation-duration:16s; animation-delay:-8s; font-size:13px;}
+    .heart:nth-child(3){left:49%; animation-duration:14s; animation-delay:-5s; font-size:15px;}
+    .heart:nth-child(4){left:72%; animation-duration:17s; animation-delay:-12s; font-size:12px;}
+    .heart:nth-child(5){left:90%; animation-duration:13s; animation-delay:-4s; font-size:16px;}
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      12% { opacity: .75; }
+      100% { transform: translateY(-115vh) rotate(22deg); opacity: 0; }
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 720px);
+      margin: 0 auto;
+      padding: max(28px, env(safe-area-inset-top)) 18px
+               max(38px, env(safe-area-inset-bottom));
+    }
+
+    .hero {
+      text-align: center;
+      padding: 22px 8px 14px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 8px 24px rgba(180, 100, 135, .08);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    h1 {
+      margin: 15px 0 5px;
+      font-size: clamp(26px, 7vw, 38px);
+      line-height: 1.25;
+      letter-spacing: -.02em;
+      background: linear-gradient(90deg, #c8537d, #a868a0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .weather-card {
+      margin-top: 14px;
+      padding: 24px 20px 20px;
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(255,255,255,.88), rgba(255,255,255,.62));
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .weather-main {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+    }
+    .location {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .condition {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .temp {
+      font-size: clamp(48px, 14vw, 72px);
+      font-weight: 750;
+      line-height: .95;
+      letter-spacing: -.05em;
+    }
+    .weather-word {
+      padding-bottom: 6px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .weather-icon {
+      font-size: clamp(54px, 15vw, 80px);
+      filter: drop-shadow(0 12px 20px rgba(173, 104, 130, .14));
+    }
+
+    .range {
+      display: flex;
+      gap: 9px;
+      margin-top: 18px;
+    }
+    .pill {
+      flex: 1;
+      text-align: center;
+      padding: 11px 8px;
+      border-radius: 16px;
+      background: rgba(255, 245, 249, .78);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .pill b {
+      display: block;
+      margin-top: 3px;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .stat {
+      padding: 16px;
+      border-radius: 21px;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 12px 32px rgba(164, 89, 120, .08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+    .stat-value {
+      font-size: 18px;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .section {
+      margin-top: 18px;
+      padding: 20px;
+      border-radius: 24px;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 14px 36px rgba(164, 89, 120, .085);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 13px;
+      font-size: 16px;
+    }
+    .section p {
+      margin: 0;
+      line-height: 1.9;
+      font-size: 15px;
+      white-space: pre-wrap;
+    }
+
+    .birthday-list {
+      display: grid;
+      gap: 10px;
+    }
+    .birthday {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 13px 14px;
+      border-radius: 17px;
+      background: rgba(255, 244, 248, .74);
+    }
+    .birthday-name {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .birthday-days {
+      font-size: 16px;
+      font-weight: 750;
+      color: var(--accent);
+      text-align: right;
+    }
+
+    .love-count {
+      text-align: center;
+      padding: 6px 0 3px;
+    }
+    .love-number {
+      font-size: clamp(42px, 12vw, 64px);
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: -.04em;
+    }
+    .love-unit {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 7px;
+    }
+
+    .quote-cn {
+      font-size: 16px !important;
+      font-weight: 650;
+    }
+    .quote-en {
+      margin-top: 8px !important;
+      color: var(--muted);
+      font-size: 13px !important;
+      line-height: 1.65 !important;
+    }
+
+    .love-letter {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 100% 0, rgba(255, 205, 222, .55), transparent 42%),
+        rgba(255,255,255,.8);
+    }
+    .love-letter::after {
+      content: "♡";
+      position: absolute;
+      right: 14px;
+      bottom: -10px;
+      font-size: 82px;
+      color: rgba(211, 86, 130, .08);
+      transform: rotate(-8deg);
+    }
+    .love-text {
+      position: relative;
+      z-index: 1;
+      font-size: 16px !important;
+      font-weight: 620;
+    }
+
+    footer {
+      text-align: center;
+      color: #aa8894;
+      font-size: 12px;
+      padding: 24px 0 6px;
+      line-height: 1.8;
+    }
+
+    @media (min-width: 640px) {
+      .page { padding-left: 24px; padding-right: 24px; }
+      .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" aria-hidden="true">
+    <div class="heart">♡</div>
+    <div class="heart">♥</div>
+    <div class="heart">♡</div>
+    <div class="heart">♥</div>
+    <div class="heart">♡</div>
+  </div>
+
+  <main class="page">
+    <header class="hero">
+      <div class="eyebrow">💗 {{ date_cn }} · {{ week }}</div>
+      <h1>{{ page_title }}</h1>
+      <p class="subtitle">{{ page_subtitle }}</p>
+    </header>
+
+    <section class="weather-card">
+      <div class="weather-main">
+        <div>
+          <div class="location">📍 {{ region }}</div>
+          <div class="condition">
+            <div class="temp">{{ temp }}</div>
+            <div class="weather-word">{{ weather }}</div>
+          </div>
+        </div>
+        <div class="weather-icon" aria-label="{{ weather }}">{{ weather_icon }}</div>
+      </div>
+
+      <div class="range">
+        <div class="pill">最低温度<b>{{ min_temp }}</b></div>
+        <div class="pill">最高温度<b>{{ max_temp }}</b></div>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="天气详情">
+      <div class="stat">
+        <div class="stat-label">💨 当前风向</div>
+        <div class="stat-value">{{ wind_dir }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">🌿 空气质量</div>
+        <div class="stat-value">{{ category }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">🍃 PM2.5</div>
+        <div class="stat-value">{{ pm2p5 }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">🌅 日出 / 日落</div>
+        <div class="stat-value">{{ sunrise }} / {{ sunset }}</div>
+      </div>
+    </section>
+
+    {% if love_days %}
+    <section class="section">
+      <h2 class="section-title">❤️ 我们的小日子</h2>
+      <div class="love-count">
+        <div class="love-number">{{ love_days }}</div>
+        <div class="love-unit">在一起的第 {{ love_days }} 天</div>
+      </div>
+    </section>
+    {% endif %}
+
+    {% if birthdays %}
+    <section class="section">
+      <h2 class="section-title">🎂 生日倒计时</h2>
+      <div class="birthday-list">
+        {% for item in birthdays %}
+        <div class="birthday">
+          <div class="birthday-name">距离 {{ item.name }} 的生日</div>
+          <div class="birthday-days">{{ item.display }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="section">
+      <h2 class="section-title">☁️ 今日建议</h2>
+      <p>{{ proposal }}</p>
+    </section>
+
+    <section class="section love-letter">
+      <h2 class="section-title">💌 今天想对你说</h2>
+      <p class="love-text">{{ chp }}</p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">✨ 每日一句</h2>
+      <p class="quote-cn">{{ note_ch }}</p>
+      {% if note_en %}
+      <p class="quote-en">{{ note_en }}</p>
+      {% endif %}
+    </section>
+
+    <footer>
+      天气每天都会变，喜欢你这件事不会。<br>
+      Made with ♡ for you
+    </footer>
+  </main>
+</body>
+</html>
