@@ -4,7 +4,7 @@
 
     "app_id": "你的微信公众号AppID",
     "app_secret": "你的微信公众号AppSecret",
-    "template_id": "你的模板ID",
+    "template_id": "你的简洁模板ID",
     "user": ["接收者OpenID"],
 
     "weather_key": "你的和风天气Key",
@@ -24,9 +24,12 @@
     "page_title": "小小洁的今日天气",
     "page_subtitle": "今天也要开开心心呀 ♡",
 
-    # legacy：兼容你现在的长模板；完整长内容只显示在网页。
-    # minimal：以后把微信模板改成只有 date.DATA 和 message.DATA 后再切换。
-    "wechat_template_mode": "legacy",
+    # 简洁模板只需要两个动态字段：date.DATA 和 message.DATA
+    # 推荐模板：
+    # 今天是：{{date.DATA}}
+    # 小小洁的今日天气已经准备好啦
+    # {{message.DATA}}
+    "wechat_template_mode": "minimal",
 
     "page_url": "https://boykillc.github.io/Love--ZXT/"
 }
