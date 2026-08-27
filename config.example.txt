@@ -1,0 +1,32 @@
+{
+    # 建议：不要把真实密钥提交到仓库。
+    # 将完整配置转成 JSON 后，保存到 GitHub Actions Secret：APP_CONFIG_JSON
+
+    "app_id": "你的微信公众号AppID",
+    "app_secret": "你的微信公众号AppSecret",
+    "template_id": "你的模板ID",
+    "user": ["接收者OpenID"],
+
+    "weather_key": "你的和风天气Key",
+    "tian_api": "你的天行数据Key",
+
+    "province": "湖南",
+    "city": "常德",
+    "region": "澧县",
+
+    "birthday1": {"name": "小小洁", "birthday": "2000-01-01"},
+    "birthday2": {"name": "大大炜", "birthday": "2000-01-01"},
+    "love_date": "2025-01-01",
+
+    "note_ch": "",
+    "note_en": "",
+
+    "page_title": "小小洁的今日天气",
+    "page_subtitle": "今天也要开开心心呀 ♡",
+
+    # legacy：兼容你现在的长模板；完整长内容只显示在网页。
+    # minimal：以后把微信模板改成只有 date.DATA 和 message.DATA 后再切换。
+    "wechat_template_mode": "legacy",
+
+    "page_url": "https://boykillc.github.io/Love--ZXT/"
+}
