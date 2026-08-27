@@ -5,6 +5,13 @@ on:
   schedule:
     - cron: "0 8 * * *"
       timezone: "Asia/Shanghai"
+  push:
+    branches: [main]
+    paths:
+      - "templates/**"
+      - "main.py"
+      - "requirements.txt"
+      - ".github/workflows/main.yml"
 
 permissions:
   contents: read
@@ -55,6 +62,7 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Send WeChat notification
+        if: github.event_name != 'push'
         env:
           APP_CONFIG_JSON: ${{ secrets.APP_CONFIG_JSON }}
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
