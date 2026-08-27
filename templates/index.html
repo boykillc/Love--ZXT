@@ -1,140 +1,52 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#ffd85c">
-  <title>{{ page_title }}</title>
-  <style>
-    :root{
-      --yellow:#ffd85c;
-      --yellow2:#fff0a4;
-      --cream:#fffaf0;
-      --orange:#f5a038;
-      --orange2:#df7f25;
-      --brown:#67442d;
-      --muted:#8c6a50;
-      --glass:rgba(255,250,229,.84);
-      --shadow:0 18px 44px rgba(91,55,24,.18);
-      --lulu:url("https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg");
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;min-height:100%;background:#f4ce61;color:var(--brown);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
-    body{overflow-x:hidden}
-    .bg{position:fixed;inset:0;z-index:0;background:linear-gradient(rgba(255,231,119,.18),rgba(115,68,30,.14)),var(--lulu) center 28%/cover no-repeat,#f4ce61;transform:scale(1.01)}
-    .bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,240,180,.09),rgba(86,48,22,.13));pointer-events:none}
-    .page{position:relative;z-index:2;width:min(100%,720px);margin:auto;padding:max(24px,env(safe-area-inset-top)) 16px max(40px,env(safe-area-inset-bottom))}
-    .hero{text-align:center;padding:14px 4px 18px}
-    .date-pill{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;background:rgba(255,249,220,.88);border:2px solid rgba(255,207,68,.85);box-shadow:0 8px 22px rgba(103,62,25,.13);font-size:13px;font-weight:750;backdrop-filter:blur(14px)}
-    h1{margin:14px 0 7px;font-size:clamp(28px,8vw,42px);line-height:1.15;color:#fff7d3;text-shadow:0 3px 0 rgba(108,61,25,.58),0 8px 22px rgba(73,41,15,.35)}
-    .subtitle{display:inline-block;margin:0;padding:7px 13px;border-radius:999px;background:rgba(255,244,196,.82);font-size:14px;font-weight:700;backdrop-filter:blur(12px)}
-
-    .card{position:relative;margin-top:16px;padding:22px 18px;border-radius:34px;background:var(--glass);border:2px solid rgba(255,202,60,.8);box-shadow:var(--shadow);backdrop-filter:blur(18px) saturate(1.08);-webkit-backdrop-filter:blur(18px) saturate(1.08);overflow:visible}
-    .lulu-mini{position:absolute;right:14px;top:-18px;width:64px;height:64px;border-radius:22px;object-fit:cover;object-position:50% 34%;border:3px solid #ffd85c;box-shadow:0 7px 18px rgba(92,54,23,.22);background:#ffd85c}
-    .card-title{display:inline-flex;align-items:center;gap:7px;margin:0 72px 13px 0;padding:7px 12px;border-radius:999px;background:linear-gradient(180deg,#ffdc6e,#ffc943);font-size:15px;font-weight:850;color:#704722}
-    .card p{margin:0;line-height:1.9;font-size:15px;white-space:pre-wrap}
-
-    .weather{padding-top:30px;border-radius:42px 42px 34px 34px;background:rgba(255,248,213,.91)}
-    .weather:before,.weather:after{content:"";position:absolute;top:-10px;width:38px;height:31px;border-radius:70% 70% 48% 48%;background:var(--yellow);border:2px solid rgba(223,126,32,.42);z-index:-1}
-    .weather:before{left:35px;transform:rotate(-18deg)}
-    .weather:after{right:35px;transform:rotate(18deg)}
-    .orange-hat{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:42px;height:25px;border-radius:50%;background:linear-gradient(#ffb143,#ef8620);box-shadow:0 4px 9px rgba(105,58,20,.15)}
-    .weather-main{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
-    .location{display:inline-flex;padding:6px 10px;border-radius:999px;background:rgba(255,232,132,.7);font-size:13px;font-weight:750;margin-bottom:10px}
-    .condition{display:flex;align-items:flex-end;gap:10px}
-    .temp{font-size:clamp(50px,15vw,76px);font-weight:900;line-height:.94;letter-spacing:-.055em}
-    .weather-word{padding-bottom:7px;color:var(--muted);font-size:17px;font-weight:850}
-    .weather-icon{font-size:clamp(55px,16vw,82px);filter:drop-shadow(0 10px 15px rgba(108,70,32,.15))}
-    .snout{margin-top:18px;padding:12px;border-radius:28px;background:linear-gradient(#ffae44,#f28c29);display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    .temp-pill{text-align:center;padding:10px 8px;border-radius:20px;background:rgba(255,247,200,.86);font-size:12px}
-    .temp-pill strong{display:block;margin-top:3px;font-size:17px}
-
-    .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:14px}
-    .stat{position:relative;min-height:105px;padding:15px 13px;border-radius:28px;background:rgba(255,249,220,.86);border:2px solid rgba(255,203,67,.67);box-shadow:0 11px 28px rgba(94,60,25,.12);backdrop-filter:blur(15px);overflow:visible}
-    .stat .lulu-mini{width:45px;height:45px;right:9px;top:-12px;border-radius:16px;border-width:2px}
-    .stat-label{color:var(--muted);font-size:12px;font-weight:750;margin:4px 44px 8px 0}
-    .stat-value{font-size:18px;font-weight:900;word-break:break-word}
-
-    .love-number{text-align:center;font-size:clamp(44px,13vw,68px);font-weight:900;color:var(--orange2);line-height:1}
-    .love-unit{text-align:center;margin-top:8px;color:var(--muted);font-size:13px;font-weight:750}
-    .birthday-list{display:grid;gap:9px}
-    .birthday{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;border-radius:24px;background:linear-gradient(rgba(255,231,128,.75),rgba(255,241,179,.82));border:1px solid rgba(255,185,46,.38)}
-    .birthday-name{font-size:14px;font-weight:750;color:#806044}
-    .birthday-days{font-size:16px;font-weight:900;color:var(--orange2);text-align:right}
-    .love-card{background:radial-gradient(circle at 90% 12%,rgba(255,169,113,.27),transparent 30%),rgba(255,247,214,.91)}
-    .quote-cn{font-size:16px!important;font-weight:780}
-    .quote-en{margin-top:8px!important;color:#917258!important;font-size:13px!important;line-height:1.65!important}
-    footer{text-align:center;color:#fff6cf;text-shadow:0 2px 9px rgba(80,45,18,.58);font-size:12px;font-weight:750;padding:25px 0 8px;line-height:1.8}
-
-    @media(min-width:640px){.page{padding-left:24px;padding-right:24px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffd85c">
+<title>{{ page_title }}</title>
+<style>
+:root{--yellow:#ffd85c;--cream:#fffaf0;--orange:#f5a038;--orange2:#df7f25;--brown:#67442d;--muted:#8c6a50;--glass:rgba(255,250,229,.86);--shadow:0 18px 44px rgba(91,55,24,.18)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#f4ce61;color:var(--brown);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}body{overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;background:linear-gradient(rgba(255,231,119,.20),rgba(115,68,30,.16)),url("https://file.moyubuluo.com/d/file/2026-08-03/c4752d917f116ad51a01709cade9ba16.jpg") center/cover no-repeat,#f4ce61;transform:scale(1.01)}
+.bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,240,180,.10),rgba(86,48,22,.14))}
+.page{position:relative;z-index:2;width:min(100%,720px);margin:auto;padding:max(24px,env(safe-area-inset-top)) 16px max(40px,env(safe-area-inset-bottom))}
+.hero{text-align:center;padding:14px 4px 18px}.date-pill{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,249,220,.9);border:2px solid rgba(255,207,68,.85);font-size:13px;font-weight:750;backdrop-filter:blur(14px)}
+h1{margin:14px 0 7px;font-size:clamp(28px,8vw,42px);color:#fff7d3;text-shadow:0 3px 0 rgba(108,61,25,.58),0 8px 22px rgba(73,41,15,.35)}.subtitle{display:inline-block;margin:0;padding:7px 13px;border-radius:999px;background:rgba(255,244,196,.84);font-size:14px;font-weight:700}
+.card{position:relative;margin-top:16px;padding:22px 18px;border-radius:34px;background:var(--glass);border:2px solid rgba(255,202,60,.8);box-shadow:var(--shadow);backdrop-filter:blur(18px);overflow:visible}.card-title{display:inline-flex;margin:0 72px 13px 0;padding:7px 12px;border-radius:999px;background:linear-gradient(#ffdc6e,#ffc943);font-size:15px;font-weight:850;color:#704722}.card p{margin:0;line-height:1.9;font-size:15px;white-space:pre-wrap}
+.lulu-mini{position:absolute;right:14px;top:-19px;width:68px;height:68px;border-radius:22px;object-fit:cover;border:3px solid var(--yellow);box-shadow:0 7px 18px rgba(92,54,23,.23);background:var(--yellow)}
+.weather{padding-top:30px;border-radius:42px 42px 34px 34px;background:rgba(255,248,213,.92)}.weather-main{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}.location{display:inline-flex;padding:6px 10px;border-radius:999px;background:rgba(255,232,132,.72);font-size:13px;font-weight:750;margin-bottom:10px}.condition{display:flex;align-items:flex-end;gap:10px}.temp{font-size:clamp(50px,15vw,76px);font-weight:900;line-height:.94}.weather-word{padding-bottom:7px;color:var(--muted);font-size:17px;font-weight:850}.weather-icon{font-size:clamp(55px,16vw,82px)}.snout{margin-top:18px;padding:12px;border-radius:28px;background:linear-gradient(#ffae44,#f28c29);display:grid;grid-template-columns:1fr 1fr;gap:8px}.temp-pill{text-align:center;padding:10px 8px;border-radius:20px;background:rgba(255,247,200,.88);font-size:12px}.temp-pill strong{display:block;margin-top:3px;font-size:17px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:14px}.stat{position:relative;min-height:112px;padding:15px 13px;border-radius:28px;background:rgba(255,249,220,.88);border:2px solid rgba(255,203,67,.67);box-shadow:0 11px 28px rgba(94,60,25,.12)}.stat .lulu-mini{width:48px;height:48px;right:9px;top:-12px;border-radius:16px;border-width:2px}.stat-label{color:var(--muted);font-size:12px;font-weight:750;margin:5px 45px 8px 0}.stat-value{font-size:18px;font-weight:900;word-break:break-word}
+.love-number{text-align:center;font-size:clamp(44px,13vw,68px);font-weight:900;color:var(--orange2);line-height:1}.love-unit{text-align:center;margin-top:8px;color:var(--muted);font-size:13px;font-weight:750}.birthday-list{display:grid;gap:9px}.birthday{display:flex;justify-content:space-between;gap:12px;padding:13px 14px;border-radius:24px;background:linear-gradient(rgba(255,231,128,.76),rgba(255,241,179,.84));border:1px solid rgba(255,185,46,.38)}.birthday-name{font-size:14px;font-weight:750}.birthday-days{font-size:16px;font-weight:900;color:var(--orange2)}.love-card{background:radial-gradient(circle at 90% 12%,rgba(255,169,113,.27),transparent 30%),rgba(255,247,214,.92)}.quote-cn{font-size:16px!important;font-weight:780}.quote-en{margin-top:8px!important;color:#917258!important;font-size:13px!important}footer{text-align:center;color:#fff6cf;text-shadow:0 2px 9px rgba(80,45,18,.58);font-size:12px;font-weight:750;padding:25px 0 8px;line-height:1.8}
+@media(min-width:640px){.page{padding-left:24px;padding-right:24px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
 </head>
 <body>
-  <div class="bg" aria-hidden="true"></div>
-  <main class="page">
-    <header class="hero">
-      <div class="date-pill">🍊 {{ date_cn }} · {{ week }}</div>
-      <h1>{{ page_title }}</h1>
-      <p class="subtitle">{{ page_subtitle }}</p>
-    </header>
+<div class="bg"></div>
+<main class="page">
+<header class="hero"><div class="date-pill">🍊 {{ date_cn }} · {{ week }}</div><h1>{{ page_title }}</h1><p class="subtitle">{{ page_subtitle }}</p></header>
 
-    <section class="card weather">
-      <span class="orange-hat" aria-hidden="true"></span>
-      <img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg" alt="噜噜" onerror="this.style.display='none'">
-      <div class="weather-main">
-        <div>
-          <div class="location">📍 {{ region }}</div>
-          <div class="condition"><div class="temp">{{ temp }}</div><div class="weather-word">{{ weather }}</div></div>
-        </div>
-        <div class="weather-icon" aria-label="{{ weather }}">{{ weather_icon }}</div>
-      </div>
-      <div class="snout">
-        <div class="temp-pill">最低温度<strong>{{ min_temp }}</strong></div>
-        <div class="temp-pill">最高温度<strong>{{ max_temp }}</strong></div>
-      </div>
-    </section>
+<section class="card weather">
+<img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg" alt="噜噜">
+<div class="weather-main"><div><div class="location">📍 {{ region }}</div><div class="condition"><div class="temp">{{ temp }}</div><div class="weather-word">{{ weather }}</div></div></div><div class="weather-icon">{{ weather_icon }}</div></div>
+<div class="snout"><div class="temp-pill">最低温度<strong>{{ min_temp }}</strong></div><div class="temp-pill">最高温度<strong>{{ max_temp }}</strong></div></div>
+</section>
 
-    <section class="stats" aria-label="天气详情">
-      <div class="stat"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg" alt="噜噜" onerror="this.style.display='none'"><div class="stat-label">💨 当前风向</div><div class="stat-value">{{ wind_dir }}</div></div>
-      <div class="stat"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg" alt="噜噜" onerror="this.style.display='none'"><div class="stat-label">🌿 空气质量</div><div class="stat-value">{{ category }}</div></div>
-      <div class="stat"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg" alt="噜噜" onerror="this.style.display='none'"><div class="stat-label">🍃 PM2.5</div><div class="stat-value">{{ pm2p5 }}</div></div>
-      <div class="stat"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg" alt="噜噜" onerror="this.style.display='none'"><div class="stat-label">🌅 日出 / 日落</div><div class="stat-value">{{ sunrise }} / {{ sunset }}</div></div>
-    </section>
+<section class="stats">
+<div class="stat"><img class="lulu-mini" src="https://n.sinaimg.cn/sinakd20122/779/w389h390/20250313/f500-gif2529f0a93fc0cbc05418cea82d25f7e4.gif" alt="噜噜"><div class="stat-label">💨 当前风向</div><div class="stat-value">{{ wind_dir }}</div></div>
+<div class="stat"><img class="lulu-mini" src="https://imgs.qiubiaoqing.com/qiubiaoqing/user_pre_up_imgs/67d0405b7cd853ZN.gif" alt="噜噜"><div class="stat-label">🌿 空气质量</div><div class="stat-value">{{ category }}</div></div>
+<div class="stat"><img class="lulu-mini" src="https://img-baofun.zhhainiao.com/pcwallpaper_ugc_mobile/preview/ba8895c660121df989a7ef715ceba206_preview_mid.jpg" alt="噜噜"><div class="stat-label">🍃 PM2.5</div><div class="stat-value">{{ pm2p5 }}</div></div>
+<div class="stat"><img class="lulu-mini" src="https://file.moyubuluo.com/d/file/2026-08-03/c4752d917f116ad51a01709cade9ba16.jpg" alt="噜噜"><div class="stat-label">🌅 日出 / 日落</div><div class="stat-value">{{ sunrise }} / {{ sunset }}</div></div>
+</section>
 
-    {% if love_days %}
-    <section class="card">
-      <img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg" alt="噜噜" onerror="this.style.display='none'">
-      <h2 class="card-title">❤️ 我们的小日子</h2>
-      <div class="love-number">{{ love_days }}</div><div class="love-unit">在一起的第 {{ love_days }} 天</div>
-    </section>
-    {% endif %}
+{% if love_days %}<section class="card"><img class="lulu-mini" src="https://n.sinaimg.cn/sinakd20122/779/w389h390/20250313/f500-gif2529f0a93fc0cbc05418cea82d25f7e4.gif" alt="噜噜"><h2 class="card-title">❤️ 我们的小日子</h2><div class="love-number">{{ love_days }}</div><div class="love-unit">在一起的第 {{ love_days }} 天</div></section>{% endif %}
 
-    {% if birthdays %}
-    <section class="card">
-      <img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg" alt="噜噜" onerror="this.style.display='none'">
-      <h2 class="card-title">🎂 生日倒计时</h2>
-      <div class="birthday-list">
-        {% for item in birthdays %}<div class="birthday"><div class="birthday-name">距离 {{ item.name }} 的生日</div><div class="birthday-days">{{ item.display }}</div></div>{% endfor %}
-      </div>
-    </section>
-    {% endif %}
+{% if birthdays %}<section class="card"><img class="lulu-mini" src="https://img-baofun.zhhainiao.com/pcwallpaper_ugc_mobile/preview/ba8895c660121df989a7ef715ceba206_preview_mid.jpg" alt="噜噜"><h2 class="card-title">🎂 生日倒计时</h2><div class="birthday-list">{% for item in birthdays %}<div class="birthday"><div class="birthday-name">距离 {{ item.name }} 的生日</div><div class="birthday-days">{{ item.display }}</div></div>{% endfor %}</div></section>{% endif %}
 
-    <section class="card">
-      <img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg" alt="噜噜" onerror="this.style.display='none'">
-      <h2 class="card-title">☁️ 今日建议</h2><p>{{ proposal }}</p>
-    </section>
-
-    <section class="card love-card">
-      <img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg" alt="噜噜" onerror="this.style.display='none'">
-      <h2 class="card-title">💌 今天想对你说</h2><p>{{ chp }}</p>
-    </section>
-
-    <section class="card">
-      <img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg" alt="噜噜" onerror="this.style.display='none'">
-      <h2 class="card-title">✨ 每日一句</h2><p class="quote-cn">{{ note_ch }}</p>{% if note_en %}<p class="quote-en">{{ note_en }}</p>{% endif %}
-    </section>
-
-    <footer>噜噜陪你看天气 · 今天也要慢慢开心 🍊<br>Made with 🧡 for you</footer>
-  </main>
+<section class="card"><img class="lulu-mini" src="https://file.moyubuluo.com/d/file/2026-08-03/c4752d917f116ad51a01709cade9ba16.jpg" alt="噜噜"><h2 class="card-title">☁️ 今日建议</h2><p>{{ proposal }}</p></section>
+<section class="card love-card"><img class="lulu-mini" src="https://imgs.qiubiaoqing.com/qiubiaoqing/user_pre_up_imgs/67d0405b7cd853ZN.gif" alt="噜噜"><h2 class="card-title">💌 今天想对你说</h2><p>{{ chp }}</p></section>
+<section class="card"><img class="lulu-mini" src="https://k.sinaimg.cn/n/sinakd/sni/345/w1191h2354/20251123/c175-006c0144a272b781d51c91522476de1f.jpg/w700d1q75cms.jpg" alt="噜噜"><h2 class="card-title">✨ 每日一句</h2><p class="quote-cn">{{ note_ch }}</p>{% if note_en %}<p class="quote-en">{{ note_en }}</p>{% endif %}</section>
+<footer>噜噜陪你看天气 · 今天也要慢慢开心 🍊<br>Made with 🧡 for you</footer>
+</main>
 </body>
 </html>
