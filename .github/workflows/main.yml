@@ -1,17 +1,9 @@
-name: Daily Love Weather
+name: weixin
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "40 9 * * *"
-  push:
-    branches: [main]
-    paths:
-      - "templates/**"
-      - "assets/**"
-      - "main.py"
-      - "requirements.txt"
-      - ".github/workflows/main.yml"
+    - cron: '7 0 * * *'
 
 permissions:
   contents: read
@@ -24,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish-and-notify:
+  build:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -38,6 +30,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: Set timezone
+        run: |
+          sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
       - name: Install dependencies
         run: |
@@ -68,7 +64,6 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Send WeChat notification
-        if: github.event_name != 'push'
         env:
           APP_CONFIG_JSON: ${{ secrets.APP_CONFIG_JSON }}
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
