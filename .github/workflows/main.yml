@@ -3,8 +3,7 @@ name: Daily Love Weather
 on:
   workflow_dispatch:
   schedule:
-    - cron: "20 17 * * *"
-      timezone: "Asia/Shanghai"
+    - cron: "40 9 * * *"
   push:
     branches: [main]
     paths:
